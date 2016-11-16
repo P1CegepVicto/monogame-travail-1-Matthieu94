@@ -24,3 +24,5 @@ C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMon
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet01\obj\x86\Debug\Projet01.exe
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet01\obj\x86\Debug\Projet01.pdb
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet01\bin\Windows\x86\Debug\Content\tank.png
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet01\bin\Windows\x86\Debug\Content\ennemi.png
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet01\bin\Windows\x86\Debug\Content\projectile.png
