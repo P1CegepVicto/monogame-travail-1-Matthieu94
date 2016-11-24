@@ -1,4 +1,3 @@
-C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\tank.png
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Projet02.exe
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Projet02.pdb
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\MonoGame.Framework.dll
@@ -24,3 +23,7 @@ C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMon
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\obj\x86\Debug\Projet02.csprojResolveAssemblyReference.cache
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\obj\x86\Debug\Projet02.exe
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\obj\x86\Debug\Projet02.pdb
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Fond.png
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Tank.png
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Projectile.png
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Ennemi.png

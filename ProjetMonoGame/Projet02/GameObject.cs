@@ -15,6 +15,8 @@ namespace Projet02
         public Vector2 position;
         public Vector2 direction;
         public int vitesse;
+        public int vitesse2;
+        public bool toucheSol;
         public Rectangle rectColision = new Rectangle();
 
         public Rectangle GetRect()

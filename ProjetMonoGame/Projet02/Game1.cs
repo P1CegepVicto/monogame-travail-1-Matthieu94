@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Projet02
 {
@@ -12,7 +13,12 @@ namespace Projet02
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         GameObject tank;
+        GameObject fond;
+        GameObject projectileTank;
+        GameObject[] ennemi = new GameObject[10];
+        int nombreEnnemis = 0;
         Rectangle fenetre;
+        Random de = new Random();
 
         public Game1()
         {
@@ -30,11 +36,11 @@ namespace Projet02
         {
             // TODO: Add your initialization logic here
 
-            this.graphics.PreferredBackBufferWidth = graphics.GraphicsDevice.DisplayMode.Width;
-            this.graphics.PreferredBackBufferHeight = graphics.GraphicsDevice.DisplayMode.Height;
+            this.graphics.PreferredBackBufferWidth = 3840;
+            this.graphics.PreferredBackBufferHeight = 2160;
             this.graphics.ToggleFullScreen();
 
-            fenetre = new Rectangle(0, 0, graphics.GraphicsDevice.DisplayMode.Width, graphics.GraphicsDevice.DisplayMode.Height);
+            fenetre = new Rectangle(0, 0, 3840, 2160);
 
             base.Initialize();
         }
@@ -52,10 +58,32 @@ namespace Projet02
 
             tank = new GameObject();
             tank.vivant = true;
-            tank.position.X = graphics.GraphicsDevice.DisplayMode.Width / 2 - 74;
-            tank.position.Y = graphics.GraphicsDevice.DisplayMode.Height / 3 + graphics.GraphicsDevice.DisplayMode.Height / 3;
-            tank.vitesse = 20;
-            tank.sprite = Content.Load<Texture2D>("tank.png");
+            tank.position.X = 1781;
+            tank.position.Y = 1559;
+            tank.vitesse = 12;
+            tank.sprite = Content.Load<Texture2D>("Tank.png");
+
+            fond = new GameObject();
+            fond.position.X = 0;
+            fond.position.Y = 0;
+            fond.sprite = Content.Load<Texture2D>("Fond.png");
+
+            projectileTank = new GameObject();
+            projectileTank.vivant = false;
+            projectileTank.vitesse = 36;
+            projectileTank.sprite = Content.Load<Texture2D>("Projectile.png");
+
+            for (int i = 0; i < ennemi.Length; i++)
+            {
+                ennemi[i] = new GameObject();
+                ennemi[i].vivant = false;
+                ennemi[i].position.Y = -161;
+                ennemi[i].position.X = de.Next(0, 3645);
+                ennemi[i].vitesse = 12;
+                ennemi[i].vitesse2 = de.Next(-12, 13);
+                ennemi[i].toucheSol = false;
+                ennemi[i].sprite = Content.Load<Texture2D>("Ennemi.png");
+            }
         }
 
         /// <summary>
@@ -79,43 +107,98 @@ namespace Projet02
 
             // TODO: Add your update logic here
 
+            if (nombreEnnemis * 10 < gameTime.TotalGameTime.Seconds)
+            {
+                nombreEnnemis++;
+
+                if (nombreEnnemis <= ennemi.Length)
+                {
+                    ennemi[nombreEnnemis - 1].vivant = true;
+                }
+            }
+                
             UpdateTank();
+            UpdateProjectileTank();
+            UpdateEnnemi();
 
             base.Update(gameTime);
         }
 
         public void UpdateTank()
         {
-            tank.direction.X = 0;
-            tank.direction.Y = 0;
-
             if (tank.vivant == true)
             {
-                if (Keyboard.GetState().IsKeyDown(Keys.W) || Keyboard.GetState().IsKeyDown(Keys.Up))
-                    tank.direction.Y -= tank.vitesse;
+                tank.direction.X = 0;
 
-                if (Keyboard.GetState().IsKeyDown(Keys.S) || Keyboard.GetState().IsKeyDown(Keys.Down))
-                    tank.direction.Y += tank.vitesse;
-
-                if (Keyboard.GetState().IsKeyDown(Keys.A) || Keyboard.GetState().IsKeyDown(Keys.Left))
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
                     tank.direction.X -= tank.vitesse;
 
-                if (Keyboard.GetState().IsKeyDown(Keys.D) || Keyboard.GetState().IsKeyDown(Keys.Right))
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
                     tank.direction.X += tank.vitesse;
 
                 tank.position += tank.direction;
 
-                if (tank.position.Y < fenetre.Top)
-                    tank.position.Y = fenetre.Top;
-
-                if (tank.position.Y + 236 > fenetre.Bottom)
-                    tank.position.Y = fenetre.Bottom - 236;
-
                 if (tank.position.X < fenetre.Left)
                     tank.position.X = fenetre.Left;
 
-                if (tank.position.X + 148 > fenetre.Right)
-                    tank.position.X = fenetre.Right - 148;
+                if (tank.position.X + 278 > fenetre.Right)
+                    tank.position.X = fenetre.Right - 278;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Space))
+                {
+                    if (projectileTank.vivant == false)
+                    {
+                        projectileTank.position.X = tank.position.X + 123;
+                        projectileTank.position.Y = tank.position.Y;
+                        projectileTank.vivant = true;
+                    }
+                }
+            }
+        }
+
+        public void UpdateProjectileTank()
+        {
+            if (projectileTank.vivant == true)
+            {
+                projectileTank.direction.Y = 0;
+                projectileTank.direction.Y -= projectileTank.vitesse;
+                projectileTank.position.Y += projectileTank.direction.Y;
+
+                if (projectileTank.position.Y + 31 < fenetre.Top)
+                    projectileTank.vivant = false;
+            }
+        }
+
+        public void UpdateEnnemi()
+        {
+            for (int i = 0; i < ennemi.Length; i++)
+            {
+                if (ennemi[i].vivant == true)
+                {
+                    ennemi[i].direction.X = 0;
+                    ennemi[i].direction.Y = 0;
+
+                    ennemi[i].direction.X += ennemi[i].vitesse2;
+                    ennemi[i].direction.Y += ennemi[i].vitesse;
+
+                    ennemi[i].position.X += ennemi[i].direction.X;
+                    ennemi[i].position.Y += ennemi[i].direction.Y;
+
+                    if (ennemi[i].position.X < fenetre.Left)
+                        ennemi[i].vitesse2 -= ennemi[i].vitesse2 * 2;
+
+                    if (ennemi[i].position.X + 196 > fenetre.Right)
+                        ennemi[i].vitesse2 -= ennemi[i].vitesse2 * 2;
+
+                    if (ennemi[i].position.Y + 161 > 1781)
+                    {
+                        ennemi[i].vitesse -= ennemi[i].vitesse * 2;
+                        ennemi[i].toucheSol = true;
+                    }
+
+                    if (ennemi[i].position.Y < fenetre.Top && ennemi[i].toucheSol == true)
+                        ennemi[i].vitesse -= ennemi[i].vitesse * 2;
+                }
             }
         }
 
@@ -131,8 +214,19 @@ namespace Projet02
 
             spriteBatch.Begin();
 
+            spriteBatch.Draw(fond.sprite, fond.position);
+
+            if (projectileTank.vivant == true)
+                spriteBatch.Draw(projectileTank.sprite, projectileTank.position);
+
             if (tank.vivant == true)
-                spriteBatch.Draw(tank.sprite, tank.position, Color.White);
+                spriteBatch.Draw(tank.sprite, tank.position);
+
+            for (int i = 0; i < ennemi.Length; i++)
+            {
+                if (ennemi[i].vivant == true)
+                    spriteBatch.Draw(ennemi[i].sprite, ennemi[i].position);
+            }
 
             spriteBatch.End();
 
