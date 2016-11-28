@@ -27,3 +27,4 @@ C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMon
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Tank.png
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Projectile.png
 C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Ennemi.png
+C:\Users\mgauv\OneDrive\Documents\GitHub\monogame-travail-1-Matthieu94\ProjetMonoGame\Projet02\bin\Windows\x86\Debug\Content\Font.xnb

@@ -16,9 +16,14 @@ namespace Projet02
         GameObject fond;
         GameObject projectileTank;
         GameObject[] ennemi = new GameObject[10];
+        GameObject projectileEnnemi;
         int nombreEnnemis = 0;
+        int tirs = 0;
+        int secondes = 0;
+        int ennemiAleatoire;
         Rectangle fenetre;
         Random de = new Random();
+        SpriteFont font;
 
         public Game1()
         {
@@ -84,6 +89,13 @@ namespace Projet02
                 ennemi[i].toucheSol = false;
                 ennemi[i].sprite = Content.Load<Texture2D>("Ennemi.png");
             }
+
+            projectileEnnemi = new GameObject();
+            projectileEnnemi.vivant = false;
+            projectileEnnemi.vitesse = 36;
+            projectileEnnemi.sprite = Content.Load<Texture2D>("Projectile.png");
+
+            font = Content.Load<SpriteFont>("Font");
         }
 
         /// <summary>
@@ -107,7 +119,7 @@ namespace Projet02
 
             // TODO: Add your update logic here
 
-            if (nombreEnnemis * 10 < gameTime.TotalGameTime.Seconds)
+            if (nombreEnnemis * 5 < gameTime.TotalGameTime.Seconds)
             {
                 nombreEnnemis++;
 
@@ -116,10 +128,37 @@ namespace Projet02
                     ennemi[nombreEnnemis - 1].vivant = true;
                 }
             }
+
+            if (tirs * 1 < gameTime.TotalGameTime.Seconds)
+            {
+                tirs++;
+
+                if (nombreEnnemis > 0)
+                {
+                    if (projectileEnnemi.vivant == false)
+                    {
+                        if (nombreEnnemis <= ennemi.Length)
+                        {
+                            ennemiAleatoire = de.Next(0, nombreEnnemis);
+
+                            if (ennemi[ennemiAleatoire].vivant == true)
+                            {
+                                projectileEnnemi.position.X = ennemi[ennemiAleatoire].position.X + 82;
+                                projectileEnnemi.position.Y = ennemi[ennemiAleatoire].position.Y + 65;
+                                projectileEnnemi.vivant = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (secondes < gameTime.TotalGameTime.Seconds)
+                secondes++;
                 
             UpdateTank();
             UpdateProjectileTank();
             UpdateEnnemi();
+            UpdateProjectileEnnemi();
 
             base.Update(gameTime);
         }
@@ -166,6 +205,18 @@ namespace Projet02
 
                 if (projectileTank.position.Y + 31 < fenetre.Top)
                     projectileTank.vivant = false;
+
+                for (int i = 0; i < ennemi.Length; i++)
+                {
+                    if (ennemi[i].vivant == true)
+                    {
+                        if (ennemi[i].GetRect().Intersects(projectileTank.GetRect()))
+                        {
+                            ennemi[i].vivant = false;
+                            projectileTank.vivant = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -198,6 +249,31 @@ namespace Projet02
 
                     if (ennemi[i].position.Y < fenetre.Top && ennemi[i].toucheSol == true)
                         ennemi[i].vitesse -= ennemi[i].vitesse * 2;
+
+                    if (tank.GetRect().Intersects(ennemi[i].GetRect()))
+                        tank.vivant = false;
+                }
+            }
+        }
+
+        public void UpdateProjectileEnnemi()
+        {
+            if (projectileEnnemi.vivant == true)
+            {
+                projectileEnnemi.direction.Y = 0;
+                projectileEnnemi.direction.Y += projectileEnnemi.vitesse;
+                projectileEnnemi.position.Y += projectileEnnemi.direction.Y;
+         
+                if (projectileEnnemi.position.Y + 31 > 1781)
+                        projectileEnnemi.vivant = false;
+
+                if (tank.vivant == true)
+                {
+                    if (tank.GetRect().Intersects(projectileEnnemi.GetRect()))
+                    {
+                        projectileEnnemi.vivant = false;
+                        tank.vivant = false;
+                    }
                 }
             }
         }
@@ -222,11 +298,16 @@ namespace Projet02
             if (tank.vivant == true)
                 spriteBatch.Draw(tank.sprite, tank.position);
 
+            if (projectileEnnemi.vivant == true)
+                spriteBatch.Draw(projectileEnnemi.sprite, projectileEnnemi.position);
+
             for (int i = 0; i < ennemi.Length; i++)
             {
                 if (ennemi[i].vivant == true)
                     spriteBatch.Draw(ennemi[i].sprite, ennemi[i].position);
             }
+
+            spriteBatch.DrawString(font, "Temps de jeu: " + secondes + " secondes", new Vector2(100, 100), Color.Black);
 
             spriteBatch.End();
 
