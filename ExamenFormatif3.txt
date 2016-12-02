@@ -1,0 +1,115 @@
+QUESTION 1 a)
+-----
+bool[] vraiOuFaux = new bool[100];
+
+QUESTION 1 b)
+-----
+vraiOuFaux[8] = false;
+
+QUESTION 1 c)
+-----
+string[] lettres = new string[22];
+
+QUESTION 1 d)
+-----
+lettres[22] = "A";
+Ce n'est pas supposé fonctionner, car la cellule 22 n'exite pas dans le tableau.
+La première cellule d'un tableau est toujours 0, donc la 22e sera la cellule 21.
+
+QUESTION 1 e)
+-----
+//Début du programme
+GameObject vaisseau;
+
+//Dans la section LoadContent
+vaisseau = new GameObject();
+vaisseau.position.X = 0;
+vaisseau.position.Y = 0;
+vaisseau.vitesse = 12;
+vaisseau.sprite = Content.Load<Texture2D>("vaisseau.png");
+
+//Dans la section Update
+vaisseau.direction.X = 0;
+
+if (Keyboard.GetState().IsKeyDown(Keys.A))
+	vaisseau.direction.X -= vaisseau.vitesse;
+
+if (Keyboard.GetState().IsKeyDown(Keys.D))
+	vaisseau.direction.X += vaisseau.vitesse;
+
+vaisseau.position.X += vaisseau.direction.X;
+
+//Dans la section Draw
+spriteBatch.Draw(vaisseau.sprite, vaisseau.position);
+
+QUESTION 2
+-----
+int[] tableauAleatoire = new int[100];
+int total = 0;
+double moyenne;
+string indices = "";
+Random de = new Random();
+
+for (int i = 0; i < tableauAleatoire.Length; i++)
+{
+	tableauAleatoire[i] = de.Next(0, 101);
+}
+
+for (int i = 0; i < tableauAleatoire.Length; i++)
+{
+	total += tableauAleatoire[i];
+}
+
+moyenne = total / tableauAleatoire.Length;
+
+for (int i = 0; i < tableauAleatoire.Length; i++)
+{
+	if (tableauAleatoire[i] > moyenne)
+	{
+		if (indices == "")
+		{
+			indices += i;
+		}
+		else
+		{
+			indices += ", " + i;
+		}
+	}
+}
+
+Console.WriteLine("Moyenne: " + moyenne);
+Console.WriteLine("Indices des valeurs plus grandes que la moyenne: " + indices);
+
+Console.ReadLine();
+
+QUESTION 3
+-----
+int nombre;
+int somme = 0;
+
+Console.WriteLine("Entrez un nombre entier.");
+nombre = int.Parse(Console.ReadLine());
+
+for (int i = 0; i < nombre; i++)
+{
+	if (nombre % 2 == 0)
+	{
+		if (i % 2 == 0)
+			somme += i;
+	}
+	else
+	{
+		if (i % 2 != 0)
+			somme += i;
+	}
+}
+
+somme += nombre;
+
+Console.WriteLine("Somme: " + somme);
+
+Console.ReadLine();
+
+QUESTION 4
+-----
+COOOOOOOONGGÉ!!!!!!
