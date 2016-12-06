@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Projet03
 {
@@ -11,6 +12,9 @@ namespace Projet03
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Random de = new Random();
+        GameObject tank;
+        GameObject fond;
 
         public Game1()
         {
@@ -28,6 +32,10 @@ namespace Projet03
         {
             // TODO: Add your initialization logic here
 
+            this.graphics.PreferredBackBufferWidth = 3840;
+            this.graphics.PreferredBackBufferHeight = 2160;
+            this.graphics.ToggleFullScreen();
+
             base.Initialize();
         }
 
@@ -41,6 +49,18 @@ namespace Projet03
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
+
+            tank = new GameObject();
+            tank.vivant = true;
+            tank.position.X = 1781;
+            tank.position.Y = 1559;
+            tank.vitesse = 24;
+            tank.sprite = Content.Load<Texture2D>("Tank.png");
+
+            fond = new GameObject();
+            fond.position.X = -139;
+            fond.position.Y = 0;
+            fond.sprite = Content.Load<Texture2D>("Fond.png");
         }
 
         /// <summary>
@@ -64,7 +84,31 @@ namespace Projet03
 
             // TODO: Add your update logic here
 
+            UpdateTank();
+
             base.Update(gameTime);
+        }
+
+        public void UpdateTank()
+        {
+            if (tank.vivant == true)
+            {
+                fond.direction.X = 0;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.A))
+                    fond.direction.X += tank.vitesse;
+
+                if (Keyboard.GetState().IsKeyDown(Keys.D))
+                    fond.direction.X -= tank.vitesse;
+
+                fond.position += fond.direction;
+
+                if (fond.position.X > -139)
+                    fond.position.X = -139;
+
+                if (fond.position.X < -11381)
+                    fond.position.X = -11381;
+            }
         }
 
         /// <summary>
@@ -76,6 +120,15 @@ namespace Projet03
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            spriteBatch.Begin();
+
+            spriteBatch.Draw(fond.sprite, fond.position);
+
+            if (tank.vivant == true)
+                spriteBatch.Draw(tank.sprite, tank.position);
+
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
